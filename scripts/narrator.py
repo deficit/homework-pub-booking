@@ -201,6 +201,8 @@ def _narrate_event(event: dict) -> list[str]:
 
 def _platform_data_dir() -> Path:
     """Where sovereign-agent's example_sessions_dir writes on this OS."""
+    if "SOVEREIGN_AGENT_DATA_DIR" in os.environ:
+        return Path(os.environ["SOVEREIGN_AGENT_DATA_DIR"])
     if sys.platform == "darwin":
         return Path.home() / "Library" / "Application Support" / "sovereign-agent"
     if sys.platform == "win32":

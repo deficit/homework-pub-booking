@@ -109,7 +109,12 @@ def fact_appears_in_log(fact: Any, log: list[ToolCallRecord] | None = None) -> b
             return any(_scan(v) for v in obj)
         return False
 
-    return any(_scan(r.output) or _scan(r.arguments) for r in records)
+    for r in records:
+        if _scan(r.output):
+            return True
+        if r.tool_name != "generate_flyer" and _scan(r.arguments):
+            return True
+    return False
 
 
 # ---------------------------------------------------------------------------
